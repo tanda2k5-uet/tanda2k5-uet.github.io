@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HienLab — Thiết kế mạch PCB, Lập trình nhúng & Tự động hóa PLC</title>
+  <meta name="description" content="HienLab cung cấp dịch vụ thiết kế mạch nguyên lý, layout PCB (KiCad/Altium/Proteus), lập trình vi điều khiển (STM32, ESP32, Arduino, ATmega), tự động hóa PLC và hỗ trợ nguyên mẫu cơ điện tử.">
+  <meta name="keywords" content="HienLab, thiết kế mạch PCB, lập trình nhúng, STM32, ESP32, Arduino, ATmega, PLC Siemens, PLC Mitsubishi, đồ án điện tử, cơ điện tử">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HienLab — Thiết kế mạch PCB, Lập trình nhúng & Tự động hóa PLC">
+  <meta property="og:description" content="Từ sơ đồ nguyên lý, layout PCB chuẩn sản xuất đến firmware vi điều khiển và tủ điều khiển PLC chạy thực tế.">
+  <meta property="og:locale" content="vi_VN">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230E3A2F'/%3E%3Cpath d='M8 8v16M24 8v16M8 16h16' stroke='%23D99B43' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='8' r='2.5' fill='%23F4F1E8'/%3E%3Ccircle cx='24' cy='24' r='2.5' fill='%23F4F1E8'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Structured Data (JSON-LD) giúp ChatGPT & Google nhận diện chính xác dịch vụ của HienLab -->
+  <script type="application/ld+json" id="ld-json-org">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "HienLab",
+    "description": "Dịch vụ thiết kế mạch điện tử, layout PCB, lập trình vi điều khiển (STM32, ESP32, AVR, Arduino), tự động hóa PLC và nguyên mẫu cơ điện tử.",
+    "url": "https://hienlab.me",
+    "areaServed": "VN",
+    "serviceType": [
+      "Thiết kế mạch nguyên lý và Layout PCB",
+      "Lập trình vi điều khiển và hệ thống nhúng",
+      "Lập trình PLC và giao diện HMI",
+      "Tư vấn và chế tạo nguyên mẫu cơ điện tử"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Bỏ qua đến nội dung chính</a>
+
+  <!-- Header -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="HienLab Trang chủ">
+        <svg class="brand-mark" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="6" fill="#0E3A2F"/>
+          <path d="M9 8V24M23 8V24M9 16H23" stroke="#D99B43" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="9" cy="8" r="2.2" fill="#F4F1E8"/>
+          <circle cx="23" cy="8" r="2.2" fill="#D99B43"/>
+          <circle cx="9" cy="24" r="2.2" fill="#D99B43"/>
+          <circle cx="23" cy="24" r="2.2" fill="#F4F1E8"/>
+        </svg>
+        <span class="brand-text">
+          <strong data-config="brandName">HienLab</strong>
+          <span class="brand-sub">PCB • Embedded • PLC</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <a href="#dich-vu">Dịch vụ</a>
+        <a href="#du-an">Dự án mẫu</a>
+        <a href="#quy-trinh">Quy trình</a>
+        <a href="#uoc-tinh">Ước tính</a>
+        <a href="#lien-he" class="nav-cta">Gửi yêu cầu</a>
+      </nav>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Mở menu điều hướng">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="7" x2="21" y2="7"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="17" x2="21" y2="17"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <div class="container mobile-menu-inner">
+        <a href="#dich-vu">Dịch vụ</a>
+        <a href="#du-an">Dự án mẫu</a>
+        <a href="#quy-trinh">Quy trình</a>
+        <a href="#uoc-tinh">Ước tính phạm vi</a>
+        <a href="#lien-he" class="btn btn-primary">Gửi yêu cầu kỹ thuật</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero: Workbench Drafting + Interactive PCB Module -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>Thiết kế mạch PCB, lập trình nhúng &amp; PLC từ sơ đồ đến sản phẩm chạy thật.</h1>
+          <p class="hero-lead">
+            <span data-config="brandName">HienLab</span> đồng hành cùng sinh viên kỹ thuật, kỹ sư R&amp;D và xưởng sản xuất nhỏ trong việc thiết kế phần cứng, viết firmware ổn định và bàn giao đầy đủ tài liệu chế tạo.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#lien-he" class="btn btn-primary">
+              <span>Trao đổi yêu cầu ngay</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="#uoc-tinh" class="btn btn-outline">Tạo bảng yêu cầu kỹ thuật</a>
+          </div>
+
+          <dl class="capability-bar" aria-label="Nền tảng kỹ thuật hỗ trợ">
+            <div>
+              <dt>Vi điều khiển</dt>
+              <dd>STM32 • ESP32 • ATmega • Arduino</dd>
+            </div>
+            <div>
+              <dt>Thiết kế mạch</dt>
+              <dd>KiCad • Altium • Proteus • Gerber</dd>
+            </div>
+            <div>
+              <dt>Tự động hóa</dt>
+              <dd>Siemens S7 • Mitsubishi FX • HMI</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Interactive Soldermask PCB Inspector -->
+        <div class="pcb-stage" aria-label="Mô phỏng bo mạch kỹ thuật tương tác">
+          <div class="pcb-board">
+            <div class="pcb-topbar">
+              <span class="pcb-rev">REV 2.4 // HL-MAIN-CTRL</span>
+              <span class="pcb-status"><span class="status-dot" aria-hidden="true"></span>DRC PASS • 2-LAYER FR4</span>
+            </div>
+
+            <div class="pcb-canvas-wrap">
+              <svg class="pcb-svg" viewBox="0 0 460 280" fill="none" role="img" aria-label="Sơ đồ bo mạch HienLab gồm khối MCU, nguồn, giao tiếp PLC và ngõ ra động cơ">
+                <!-- Mounting holes -->
+                <g stroke="#D99B43" stroke-width="2">
+                  <circle cx="20" cy="20" r="6" fill="#09241D"/>
+                  <circle cx="440" cy="20" r="6" fill="#09241D"/>
+                  <circle cx="20" cy="260" r="6" fill="#09241D"/>
+                  <circle cx="440" cy="260" r="6" fill="#09241D"/>
+                </g>
+
+                <!-- Copper traces -->
+                <g class="pcb-traces" stroke="#C87D2F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.72">
+                  <path d="M110 88 H165 L182 105 H196"/>
+                  <path d="M110 104 H158 L178 124 H196"/>
+                  <path d="M110 194 H156 L174 176 H196"/>
+                  <path d="M268 112 H305 L322 95 H352"/>
+                  <path d="M268 128 H314 L328 114 H352"/>
+                  <path d="M268 158 H305 L324 177 H352"/>
+                  <path d="M268 174 H296 L316 194 H352"/>
+                  <path d="M232 184 V224 H292"/>
+                  <path d="M214 96 V54 H270"/>
+                </g>
+
+                <!-- Vias -->
+                <g fill="#D99B43">
+                  <circle cx="165" cy="88" r="2.6"/>
+                  <circle cx="305" cy="112" r="2.6"/>
+                  <circle cx="305" cy="158" r="2.6"/>
+                  <circle cx="270" cy="54" r="2.6"/>
+                  <circle cx="292" cy="224" r="2.6"/>
+                </g>
+
+                <!-- Block 1: Power & Protection (PCB) -->
+                <g class="pcb-node" data-node="pcb" tabindex="0" role="button" aria-label="Kiểm tra khối Thiết kế mạch và nguồn">
+                  <rect x="34" y="64" width="76" height="62" rx="4" fill="#134B3D" stroke="#D99B43" stroke-width="1.5"/>
+                  <text x="72" y="90" text-anchor="middle" fill="#F4F1E8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">PWR/PCB</text>
+                  <text x="72" y="106" text-anchor="middle" fill="#B5D0C5" font-family="JetBrains Mono, monospace" font-size="8.5">24V→5V/3V3</text>
+                </g>
+
+                <!-- Block 2: Sensors & IO -->
+                <g class="pcb-node" data-node="mech" tabindex="0" role="button" aria-label="Kiểm tra khối Cảm biến và cơ điện tử">
+                  <rect x="34" y="162" width="76" height="62" rx="4" fill="#134B3D" stroke="#6E9E8E" stroke-width="1.5"/>
+                  <text x="72" y="188" text-anchor="middle" fill="#F4F1E8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">SENSOR</text>
+                  <text x="72" y="204" text-anchor="middle" fill="#B5D0C5" font-family="JetBrains Mono, monospace" font-size="8.5">ENC / PWM</text>
+                </g>
+
+                <!-- Block 3: Central MCU (Active default) -->
+                <g class="pcb-node is-active" data-node="mcu" tabindex="0" role="button" aria-label="Kiểm tra khối Vi điều khiển trung tâm">
+                  <rect x="196" y="96" width="72" height="88" rx="4" fill="#0A2820" stroke="#F4F1E8" stroke-width="1.8"/>
+                  <circle cx="206" cy="106" r="2.5" fill="#D99B43"/>
+                  <text x="232" y="136" text-anchor="middle" fill="#F4F1E8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">MCU</text>
+                  <text x="232" y="152" text-anchor="middle" fill="#D99B43" font-family="JetBrains Mono, monospace" font-size="8.5">STM32/ESP</text>
+                  <!-- Pins -->
+                  <g stroke="#D99B43" stroke-width="1.6">
+                    <line x1="190" y1="112" x2="196" y2="112"/>
+                    <line x1="190" y1="128" x2="196" y2="128"/>
+                    <line x1="190" y1="144" x2="196" y2="144"/>
+                    <line x1="190" y1="160" x2="196" y2="160"/>
+                    <line x1="268" y1="112" x2="274" y2="112"/>
+                    <line x1="268" y1="128" x2="274" y2="128"/>
+                    <line x1="268" y1="144" x2="274" y2="144"/>
+                    <line x1="268" y1="160" x2="274" y2="160"/>
+                  </g>
+                </g>
+
+                <!-- Block 4: PLC / RS485 Comm -->
+                <g class="pcb-node" data-node="plc" tabindex="0" role="button" aria-label="Kiểm tra khối Giao tiếp PLC và Công nghiệp">
+                  <rect x="352" y="68" width="74" height="62" rx="4" fill="#134B3D" stroke="#6E9E8E" stroke-width="1.5"/>
+                  <text x="389" y="94" text-anchor="middle" fill="#F4F1E8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">PLC I/O</text>
+                  <text x="389" y="110" text-anchor="middle" fill="#B5D0C5" font-family="JetBrains Mono, monospace" font-size="8.5">RS485 / MOD</text>
+                </g>
+
+                <!-- Block 5: Actuator / Driver -->
+                <g class="pcb-node" data-node="driver" tabindex="0" role="button" aria-label="Kiểm tra khối Điều khiển động cơ và tải">
+                  <rect x="352" y="156" width="74" height="62" rx="4" fill="#134B3D" stroke="#6E9E8E" stroke-width="1.5"/>
+                  <text x="389" y="182" text-anchor="middle" fill="#F4F1E8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">DRIVER</text>
+                  <text x="389" y="198" text-anchor="middle" fill="#B5D0C5" font-family="JetBrains Mono, monospace" font-size="8.5">STEP / SERVO</text>
+                </g>
+
+                <!-- Silkscreen annotation -->
+                <text x="232" y="256" text-anchor="middle" fill="#89B3A5" font-family="JetBrains Mono, monospace" font-size="9">NHẤP VÀO TỪNG KHỐI ĐỂ XEM THÔNG SỐ TRIỂN KHAI</text>
+              </svg>
+            </div>
+
+            <div class="pcb-inspector" id="pcb-inspector" aria-live="polite">
+              <div class="inspector-head">
+                <strong id="inspector-title">Khối Vi điều khiển &amp; Firmware</strong>
+                <span class="inspector-tag" id="inspector-tag">C / C++ • FreeRTOS</span>
+              </div>
+              <p id="inspector-desc">Lập trình STM32, ESP32, ATmega16/328, Arduino chuẩn cấu trúc module, xử lý ngắt thời gian thực, giao tiếp UART/SPI/I2C/CAN và tối ưu chống nhiễu.</p>
+              <div class="inspector-deliverables" id="inspector-deliverables">
+                <span>Source code chú thích rõ</span>
+                <span>File mô phỏng Proteus</span>
+                <span>Hướng dẫn nạp &amp; debug</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services: Technical Specification Ledger -->
+    <section class="section" id="dich-vu">
+      <div class="container">
+        <div class="section-head">
+          <h2>Dịch vụ kỹ thuật cốt lõi</h2>
+          <p>Mỗi hạng mục đều đi kèm sơ đồ rõ ràng, kiểm thử trước khi bàn giao và hỗ trợ giải thích nguyên lý để bạn làm chủ hoàn toàn hệ thống.</p>
+        </div>
+
+        <div class="service-ledger">
+          <article class="service-row">
+            <div class="service-meta">
+              <span class="spec-code">SRV-01</span>
+              <h3>Thiết kế mạch nguyên lý &amp; Layout PCB</h3>
+            </div>
+            <div class="service-body">
+              <p>Vẽ sơ đồ nguyên lý (Schematic) chuẩn kỹ thuật, thiết kế bo mạch 2–4 lớp trên KiCad, Altium Designer hoặc Proteus. Tối ưu bố trí khối nguồn, chống nhiễu EMC cơ bản và xuất đầy đủ bộ file đặt mạch.</p>
+              <ul class="spec-list">
+                <li><strong>Đầu ra:</strong> File dự án gốc, Gerber, Drill, BOM linh kiện, file vị trí CPL (JLCPCB / PCBWay).</li>
+                <li><strong>Kiểm tra:</strong> Đạt ERC/DRC sạch lỗi, kiểm tra footprint linh kiện thực tế trước khi gửi nhà in.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service-row">
+            <div class="service-meta">
+              <span class="spec-code">SRV-02</span>
+              <h3>Lập trình vi điều khiển &amp; Hệ thống nhúng</h3>
+            </div>
+            <div class="service-body">
+              <p>Phát triển firmware ổn định cho STM32, ESP32, AVR/ATmega, Arduino, PIC. Tích hợp cảm biến, màn hình LCD/OLED, ma trận LED, điều khiển PWM và kết nối IoT (WiFi, MQTT, Web dashboard).</p>
+              <ul class="spec-list">
+                <li><strong>Đầu ra:</strong> Mã nguồn C/C++ gọn gàng, lưu đồ thuật toán, hướng dẫn biên dịch &amp; nạp chương trình.</li>
+                <li><strong>Kiểm tra:</strong> Mô phỏng trên Proteus và đo đạc thực tế bằng máy hiện sóng / logic analyzer khi có phần cứng.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service-row">
+            <div class="service-meta">
+              <span class="spec-code">SRV-03</span>
+              <h3>Tự động hóa PLC, Biến tần &amp; Giao diện HMI</h3>
+            </div>
+            <div class="service-body">
+              <p>Lập trình điều khiển dây chuyền, băng tải, phân loại sản phẩm, điều khiển PID nhiệt độ/áp suất trên PLC Siemens (S7-1200), Mitsubishi (FX series), Delta kết nối cảm biến công nghiệp và màn hình HMI.</p>
+              <ul class="spec-list">
+                <li><strong>Đầu ra:</strong> Chương trình Ladder / Structured Text, bảng gán địa chỉ I/O, sơ đồ đấu nối tủ điện.</li>
+                <li><strong>Kiểm tra:</strong> Chạy mô phỏng kịch bản lỗi, dừng khẩn cấp (E-Stop) và chuyển chế độ Auto/Manual.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service-row">
+            <div class="service-meta">
+              <span class="spec-code">SRV-04</span>
+              <h3>Nguyên mẫu Cơ điện tử &amp; Hỗ trợ Đồ án</h3>
+            </div>
+            <div class="service-body">
+              <p>Tư vấn chọn cơ cấu chấp hành, động cơ bước/servo, thiết kế chi tiết cơ khí in 3D (kẹp robot, giá đỡ cảm biến) và hoàn thiện hệ thống tích hợp phần cứng – phần mềm – báo cáo kỹ thuật.</p>
+              <ul class="spec-list">
+                <li><strong>Đầu ra:</strong> Mô hình hoạt động hoàn chỉnh, file CAD/STL in 3D, tài liệu thuyết minh nguyên lý hoạt động.</li>
+                <li><strong>Hỗ trợ:</strong> Giải thích chi tiết từng khối mạch và đoạn code để bạn tự tin bảo vệ hoặc vận hành.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Studies / Representative Projects: Committed Deep Soldermask Band -->
+    <section class="section section-dark" id="du-an">
+      <div class="container">
+        <div class="section-head section-head-split">
+          <div>
+            <h2>Dự án mẫu &amp; Năng lực triển khai</h2>
+            <p>Các bài toán kỹ thuật tiêu biểu trong lĩnh vực vi điều khiển, cơ điện tử và PLC. Nhấp bộ lọc để xem chi tiết cấu trúc từng hệ thống.</p>
+          </div>
+          <div class="filter-group" role="tablist" aria-label="Lọc dự án theo lĩnh vực">
+            <button type="button" class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">Tất cả</button>
+            <button type="button" class="filter-btn" data-filter="embedded" role="tab" aria-selected="false">PCB &amp; VĐK</button>
+            <button type="button" class="filter-btn" data-filter="plc" role="tab" aria-selected="false">PLC &amp; Tự động</button>
+            <button type="button" class="filter-btn" data-filter="mechatronics" role="tab" aria-selected="false">Cơ điện tử</button>
+          </div>
+        </div>
+
+        <div class="project-list" id="project-list">
+          <article class="project-item" data-category="embedded">
+            <div class="project-top">
+              <span class="project-badge">PCB &amp; Vi điều khiển</span>
+              <span class="project-id">PRJ-MCU-01</span>
+            </div>
+            <h3>Hệ thống hiển thị Ma trận LED 32x32 dùng ATmega16</h3>
+            <p>Thiết kế mạch nguyên lý, tối ưu mạch quét dòng/cột chống bóng ma và viết firmware C điều khiển hiệu ứng chữ chạy, đồng hồ thời gian thực với tần số quét ổn định.</p>
+            <dl class="project-specs">
+              <div><dt>Nền tảng</dt><dd>ATmega16, IC dịch 74HC595, ULN2803</dd></div>
+              <div><dt>Công cụ</dt><dd>KiCad, Proteus, AVR-GCC</dd></div>
+              <div><dt>Bàn giao</dt><dd>Schematic, PCB Gerber, Code &amp; Báo cáo</dd></div>
+            </dl>
+          </article>
+
+          <article class="project-item" data-category="mechatronics">
+            <div class="project-top">
+              <span class="project-badge">Cơ điện tử &amp; Robot</span>
+              <span class="project-id">PRJ-ROB-02</span>
+            </div>
+            <h3>Cánh tay Robot SCARA &amp; Cơ cấu kẹp Gripper in 3D</h3>
+            <p>Tính toán động học thuận/nghịch cho cánh tay robot 4 bậc tự do, điều khiển động cơ bước chính xác kèm cơ cấu kẹp in 3D và giao diện điều khiển trực quan từ máy tính.</p>
+            <dl class="project-specs">
+              <div><dt>Nền tảng</dt><dd>Arduino / Stepper NEMA17 / Driver A4988</dd></div>
+              <div><dt>Công cụ</dt><dd>Processing GUI, CAD 3D Printing, C++</dd></div>
+              <div><dt>Bàn giao</dt><dd>File STL, Sơ đồ đấu nối, Firmware + GUI</dd></div>
+            </dl>
+          </article>
+
+          <article class="project-item" data-category="plc">
+            <div class="project-top">
+              <span class="project-badge">PLC &amp; Tự động hóa</span>
+              <span class="project-id">PRJ-PLC-03</span>
+            </div>
+            <h3>Tủ điều khiển phân loại sản phẩm &amp; giám sát HMI</h3>
+            <p>Thiết kế logic Ladder theo chuẩn IEC 61131-3 cho dây chuyền phân loại theo chiều cao/màu sắc, tích hợp bộ đếm sản lượng, cảnh báo sự cố và màn hình vận hành HMI.</p>
+            <dl class="project-specs">
+              <div><dt>Nền tảng</dt><dd>PLC Siemens S7-1200 / Mitsubishi FX</dd></div>
+              <div><dt>Công cụ</dt><dd>TIA Portal / GX Works, HMI Simulation</dd></div>
+              <div><dt>Bàn giao</dt><dd>Bảng I/O, Logic Ladder/ST, Giao diện HMI</dd></div>
+            </dl>
+          </article>
+
+          <article class="project-item" data-category="embedded">
+            <div class="project-top">
+              <span class="project-badge">PCB &amp; IoT</span>
+              <span class="project-id">PRJ-IOT-04</span>
+            </div>
+            <h3>Bộ điều khiển PWM &amp; giám sát cảm biến qua ESP32</h3>
+            <p>Mạch điều tốc động cơ DC bằng xung PWM cách ly quang, đọc cảm biến nhiệt độ/dòng điện và đẩy dữ liệu trực tiếp lên bảng điều khiển web theo thời gian thực.</p>
+            <dl class="project-specs">
+              <div><dt>Nền tảng</dt><dd>ESP32, Opto PC817, MOSFET công suất</dd></div>
+              <div><dt>Công cụ</dt><dd>KiCad 2-Layer PCB, ESP-IDF / Arduino</dd></div>
+              <div><dt>Bàn giao</dt><dd>Bo mạch hoàn thiện, Firmware, Web UI</dd></div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process: 4-Stage Pipeline -->
+    <section class="section" id="quy-trinh">
+      <div class="container">
+        <div class="section-head">
+          <h2>Quy trình triển khai rõ ràng từng mốc</h2>
+          <p>Bạn luôn kiểm tra được tiến độ theo từng giai đoạn — không làm mù, không phát sinh chi phí bất ngờ.</p>
+        </div>
+
+        <ol class="process-steps">
+          <li>
+            <span class="step-tag">Bước 1</span>
+            <h3>Chốt yêu cầu &amp; Thông số</h3>
+            <p>Trao đổi mục tiêu bài toán, nguồn cấp, cảm biến, vi điều khiển/PLC dự kiến và thời hạn hoàn thành.</p>
+          </li>
+          <li>
+            <span class="step-tag">Bước 2</span>
+            <h3>Phương án &amp; Báo giá cố định</h3>
+            <p>Gửi sơ đồ khối giải pháp, danh sách đầu ra bàn giao và chi phí cụ thể trước khi bắt đầu thực hiện.</p>
+          </li>
+          <li>
+            <span class="step-tag">Bước 3</span>
+            <h3>Thiết kế, Code &amp; Demo kiểm thử</h3>
+            <p>Hoàn thiện schematic/PCB, lập trình firmware hoặc PLC và quay video mô phỏng / chạy thử thực tế để bạn nghiệm thu.</p>
+          </li>
+          <li>
+            <span class="step-tag">Bước 4</span>
+            <h3>Bàn giao &amp; Hướng dẫn sử dụng</h3>
+            <p>Gửi trọn bộ file nguồn, Gerber/BOM, mã nguồn chú thích chi tiết và hỗ trợ chỉnh sửa/giải đáp kỹ thuật sau bàn giao.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Interactive Scope Estimator + Contact -->
+    <section class="section section-tinted" id="uoc-tinh">
+      <div class="container split-layout">
+        <!-- Scope Builder -->
+        <div class="estimator-panel">
+          <h2>Tạo nhanh bảng yêu cầu kỹ thuật</h2>
+          <p>Chọn các hạng mục bạn đang cần — hệ thống sẽ tự động gom thành mẫu mô tả chuẩn để bạn gửi qua Zalo hoặc Email và nhận báo giá nhanh nhất.</p>
+
+          <fieldset class="scope-group">
+            <legend>1. Hạng mục cần thực hiện</legend>
+            <label class="scope-option">
+              <input type="checkbox" name="scope" value="Thiết kế sơ đồ nguyên lý (Schematic)" checked>
+              <span>Thiết kế sơ đồ nguyên lý (Schematic)</span>
+            </label>
+            <label class="scope-option">
+              <input type="checkbox" name="scope" value="Layout PCB 2–4 lớp + xuất file Gerber/BOM">
+              <span>Layout PCB 2–4 lớp + xuất file Gerber/BOM</span>
+            </label>
+            <label class="scope-option">
+              <input type="checkbox" name="scope" value="Lập trình Vi điều khiển (STM32/ESP32/AVR/Arduino)" checked>
+              <span>Lập trình Vi điều khiển (STM32/ESP32/AVR/Arduino)</span>
+            </label>
+            <label class="scope-option">
+              <input type="checkbox" name="scope" value="Lập trình PLC & giao diện HMI">
+              <span>Lập trình PLC &amp; giao diện HMI</span>
+            </label>
+            <label class="scope-option">
+              <input type="checkbox" name="scope" value="Mô phỏng Proteus / Kiểm thử nguyên mẫu thực tế">
+              <span>Mô phỏng Proteus / Kiểm thử nguyên mẫu thực tế</span>
+            </label>
+            <label class="scope-option">
+              <input type="checkbox" name="scope" value="Tài liệu thuyết minh nguyên lý & hướng dẫn vận hành">
+              <span>Tài liệu thuyết minh nguyên lý &amp; hướng dẫn vận hành</span>
+            </label>
+          </fieldset>
+
+          <div class="form-row">
+            <label for="timeline-select">2. Thời gian dự kiến cần hoàn thành</label>
+            <select id="timeline-select">
+              <option value="Linh hoạt (1–2 tuần)">Linh hoạt (1–2 tuần)</option>
+              <option value="Gấp (3–5 ngày)">Gấp (3–5 ngày)</option>
+              <option value="Dự án dài hạn (trên 2 tuần)">Dự án dài hạn (trên 2 tuần)</option>
+            </select>
+          </div>
+
+          <div class="brief-preview">
+            <div class="brief-preview-head">
+              <span>Bản tóm tắt yêu cầu tự động</span>
+              <button type="button" class="btn-inline" id="copy-brief-btn">Sao chép mẫu</button>
+            </div>
+            <pre id="brief-output"></pre>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-panel" id="lien-he">
+          <h2>Gửi yêu cầu trực tiếp</h2>
+          <p>Mô tả ngắn gọn ý tưởng hoặc bài toán của bạn. Mình sẽ phản hồi kèm phương án kỹ thuật và mức chi phí cụ thể.</p>
+
+          <form id="contact-form" novalidate>
+            <div class="field">
+              <label for="sender-name">Họ tên hoặc đơn vị <span aria-hidden="true">*</span></label>
+              <input type="text" id="sender-name" name="name" placeholder="Ví dụ: Nguyễn Minh Quân" required autocomplete="name">
+              <small class="field-error" id="err-name" role="alert"></small>
+            </div>
+
+            <div class="field">
+              <label for="sender-contact">Email hoặc Số Zalo liên hệ <span aria-hidden="true">*</span></label>
+              <input type="text" id="sender-contact" name="contact" placeholder="Ví dụ: 09xx... hoặc email@domain.com" required>
+              <small class="field-error" id="err-contact" role="alert"></small>
+            </div>
+
+            <div class="field">
+              <label for="sender-detail">Mô tả bài toán kỹ thuật <span aria-hidden="true">*</span></label>
+              <textarea id="sender-detail" name="detail" rows="4" placeholder="Ví dụ: Cần làm mạch điều khiển động cơ bước dùng STM32, có cảm biến hành trình và màn hình OLED..." required></textarea>
+              <small class="field-error" id="err-detail" role="alert"></small>
+            </div>
+
+            <div class="contact-actions">
+              <button type="submit" class="btn btn-primary">Mở ứng dụng Email để gửi</button>
+              <a href="#" class="btn btn-outline" id="zalo-direct-btn" target="_blank" rel="noopener noreferrer">Nhắn trực tiếp qua Zalo</a>
+            </div>
+            <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="direct-info">
+            <div>
+              <span>Email</span>
+              <a href="mailto:ph12340965@gmail.com" data-config-href="email" data-config="email">ph12340965@gmail.com</a>
+            </div>
+            <div>
+              <span>Điện thoại / Zalo</span>
+              <a href="https://zalo.me/0375105056" data-config-href="zaloUrl" data-config="phoneDisplay" target="_blank" rel="noopener noreferrer">0375 105 056</a>
+            </div>
+            <div>
+              <span>Khu vực &amp; Giờ làm việc</span>
+              <span data-config="location">Việt Nam (Hỗ trợ online toàn quốc)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong data-config="brandName">HienLab</strong>
+        <p data-config="tagline">Điện tử • Lập trình nhúng • Tự động hóa PLC</p>
+      </div>
+      <div class="footer-links">
+        <a href="#dich-vu">Dịch vụ</a>
+        <a href="#du-an">Dự án mẫu</a>
+        <a href="#quy-trinh">Quy trình</a>
+        <a href="#" data-config-href="githubUrl" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+      <p class="footer-copy">© <span id="current-year">2026</span> <span data-config="brandName">HienLab</span>. Thiết kế bởi <span data-config="ownerName">Phạm Hiền</span>.</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

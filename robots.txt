@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Cho phép các crawler AI (OpenAI / ChatGPT Search) lập chỉ mục website
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+Sitemap: https://hienlab.me/sitemap.xml
